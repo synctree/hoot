@@ -5,6 +5,14 @@ Hoot::Application.routes.draw do
 
 
   root :to => "home#index"
+
+  match "search" => "home#search", :as => "search"
+
+  match ":username/followings" => "follows#followings", :as => "followings"
+  match ":username/followers" => "follows#followers", :as => "followers"
+  match ":username/follow" => "follows#follow", :as => "follow"
+  match ":username/unfollow" => "follows#unfollow", :as => "unfollow"
+
   match ":username" => "home#profile", :as => "profile"
 
   # The priority is based upon order of creation:

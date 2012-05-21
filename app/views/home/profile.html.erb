@@ -1,3 +1,12 @@
-<h1>@<%= @user.username %></h1>
+<h1>
+  @<%= @user.username %>
+  <% if current_user.following?(@user) %>
+    <%= link_to(raw("<button class='btn btn-danger'>Unfollow</button>"), unfollow_path(@user.username)) %>
+  <% elsif current_user == @user %>
+    (You)
+  <% else %>
+    <%= link_to(raw("<button class='btn btn-success'>Follow</button>"), follow_path(@user.username)) %>
+  <% end %>
+</h1>
 <hr />
 <%= render @messages %>

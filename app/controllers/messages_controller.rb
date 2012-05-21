@@ -1,8 +1,10 @@
 class MessagesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    @messages = current_user.messages
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +15,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
-    @message = Message.find(params[:id])
+    @message = current_user.messages.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +26,7 @@ class MessagesController < ApplicationController
   # GET /messages/new
   # GET /messages/new.json
   def new
-    @message = Message.new
+    @message = current_user.messages.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,7 +36,7 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
-    @message = Message.find(params[:id])
+    @message = current_user.messages.find(params[:id])
   end
 
   # POST /messages
@@ -56,7 +58,7 @@ class MessagesController < ApplicationController
   # PUT /messages/1
   # PUT /messages/1.json
   def update
-    @message = Message.find(params[:id])
+    @message = current_user.messages.find(params[:id])
 
     respond_to do |format|
       if @message.update_attributes(params[:message])
@@ -72,7 +74,7 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    @message = Message.find(params[:id])
+    @message = current_user.messages.find(params[:id])
     @message.destroy
 
     respond_to do |format|

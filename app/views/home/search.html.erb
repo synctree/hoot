@@ -1,0 +1,4 @@
+<h1>Search '<%= params[:q] %>'</h1>
+<%= pluralize(@messages.count, 'Result') %>
+<hr />
+<%= render @messages %>

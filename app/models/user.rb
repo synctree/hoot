@@ -24,4 +24,15 @@ class User < ActiveRecord::Base
 
   has_many :followers_follows, :foreign_key => "following_user_id", :class_name => "Follow"
   has_many :followers, :through => :followers_follows, :source => :user
+
+
+  def following?(user)
+    !follows.find_by_following_user_id(user.id).nil?
+  end
+
+
+  def interesting_messages
+    Message.where("user_id IN (?)", followings.collect { |f| f.id } + [ id ])
+  end
+
 end

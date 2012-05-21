@@ -31,10 +31,14 @@
           <%= link_to "Hoot", root_path, :class => "brand" %>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Link1", "/path1"  %></li>
+              <%= form_tag(search_path, :method => :get, :class => "navbar-search") do %>
+                <%= text_field_tag :q, "", :placeholder => "Search" %>
+              <% end %>
+
               <% if user_signed_in? %>
                 <li><%= link_to current_user.username, profile_path(current_user.username) %></li>
                 <li><%= link_to "New", new_message_path %></li>
+                <li><%= link_to "Manage", messages_path  %></li>
                 <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
               <% else %>
                 <li><%= link_to "Sign In",  new_user_session_path %></li>
@@ -51,17 +55,19 @@
            <div class="span9">
               <%= yield %>
             </div>
-            <div class="span3">
-              <div class="well sidebar-nav">
-                <h3>Sidebar</h3>
-                <ul class="nav nav-list">
-                  <li class="nav-header">Sidebar</li>
-                  <li><%= link_to "Link1", "/path1"  %></li>
-                  <li><%= link_to "Link2", "/path2"  %></li>
-                  <li><%= link_to "Link3", "/path3"  %></li>
-                </ul>
-              </div><!--/.well -->
-            </div><!--/span-->
+            <% if current_user %>
+              <div class="span3">
+                <div class="well sidebar-nav">
+                  <h3><%= link_to "@#{current_user.username}", profile_path(current_user.username) %></h3>
+                  <ul class="nav nav-list">
+                    <li class="nav-header">Stats</li>
+                    <li><%= link_to pluralize(current_user.messages.count, "Hoot"), profile_path(current_user.username)  %></li>
+                    <li><%= link_to pluralize(current_user.followers.count, "Follower"), followers_path(current_user.username)  %></li>
+                    <li><%= link_to pluralize(current_user.followings.count, "Person") + " I Follow", followings_path(current_user.username)  %></li>
+                  </ul>
+                </div><!--/.well -->
+              </div><!--/span-->
+            <% end %>
         </div><!--/row-->
       </div><!--/content-->
 
