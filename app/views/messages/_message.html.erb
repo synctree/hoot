@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="span1">
+    <%= link_to image_tag("http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(message.user.email)}.jpg"),
+                profile_path(message.user.username),
+                :class => "thumbnail" %>
+  </div>
+  <div class="span6">
+    <b><%= link_to "@#{message.user.username}", profile_path(message.user.username) %></b>
+    <small>"<%= distance_of_time_in_words_to_now(message.created_at)%> ago" </small>
+    <p><%= message.body %></p>
+  </div>
+</div>
+

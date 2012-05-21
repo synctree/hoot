@@ -5,6 +5,7 @@ Hoot::Application.routes.draw do
 
 
   root :to => "home#index"
+  match ":username" => "home#profile", :as => "profile"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

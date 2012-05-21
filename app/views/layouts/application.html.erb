@@ -28,12 +28,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Hoot</a>
+          <%= link_to "Hoot", root_path, :class => "brand" %>
           <div class="container nav-collapse">
             <ul class="nav">
               <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <% if user_signed_in? %>
+                <li><%= link_to current_user.username, profile_path(current_user.username) %></li>
+                <li><%= link_to "New", new_message_path %></li>
+                <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+              <% else %>
+                <li><%= link_to "Sign In",  new_user_session_path %></li>
+              <% end %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
