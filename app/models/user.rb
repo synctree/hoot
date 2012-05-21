@@ -18,4 +18,10 @@ class User < ActiveRecord::Base
   #
 
   has_many :messages
+
+  has_many :follows
+  has_many :followings, :through => :follows, :source => :following_user
+
+  has_many :followers_follows, :foreign_key => "following_user_id", :class_name => "Follow"
+  has_many :followers, :through => :followers_follows, :source => :user
 end
