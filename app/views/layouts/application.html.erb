@@ -31,14 +31,21 @@
           <%= link_to "Hoot", root_path, :class => "brand" %>
           <div class="container nav-collapse">
             <ul class="nav">
-              <%= form_tag(search_path, :method => :get, :class => "navbar-search") do %>
-                <%= text_field_tag :q, "", :placeholder => "Search" %>
-              <% end %>
 
               <% if user_signed_in? %>
                 <li><%= link_to current_user.username, profile_path(current_user.username) %></li>
                 <li><%= link_to "New", new_message_path %></li>
                 <li><%= link_to "Manage", messages_path  %></li>
+              <% end %>
+            </ul>
+
+            <ul class="nav pull-right">
+              <%= form_tag(search_path, :method => :get, :class => "navbar-search") do %>
+                <%= text_field_tag :q, "", :placeholder => "Search" %>
+              <% end %>
+
+              <% if user_signed_in? %>
+                <li><%= link_to "Account Settings", edit_user_registration_path  %></li>
                 <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
               <% else %>
                 <li><%= link_to "Sign In",  new_user_session_path %></li>
